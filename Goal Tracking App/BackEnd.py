@@ -14,9 +14,9 @@ from flask_cors import CORS, cross_origin
 
 
 
-access_token = '2/1207126577252821/1207126487695962:79f428fbf38650c2263555028f8aff7e'
-workspace = '1207126577252832'
-admin_id = '1207126577252821'
+access_token = '*access-token*'
+workspace = '*workspace-id*'
+admin_id = '*admin-id*'
 time_line = '1207126457626186'
 
 configuration = asana.Configuration()
@@ -26,9 +26,9 @@ goals_api_instance = asana.GoalsApi(api_client)
 
 
 
-binId = '66247259acd3cb34a83bfbfe'
-GoalsBinID = '662470e0ad19ca34f85d8482'
-apiKey = '$2a$10$.EkYcwpjcboIASxi2m5V1e0npd.iETPvyTCThCNLGOEvy.Tdu/ZSK'
+binId = '*bin-id*'
+GoalsBinID = '*goals-bid-id*'
+apiKey = '*json-api-key*'
 
 USER_DATA_URL = 'https://api.jsonbin.io/v3/b/{binId}'
 
