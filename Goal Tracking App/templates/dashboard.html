@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Dashboard</title>
+    <style>
+        /* CSS styles */
+        /* Reset default margin and padding for all elements */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #663399;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 32px;
+        }
+
+        .welcome-container {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #9575cd;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #663399;
+            margin-bottom: 16px;
+        }
+
+        .goal {
+            margin-bottom: 24px;
+            padding: 16px;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .task {
+            margin: 8px 0;
+            padding: 8px 16px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .task:hover {
+            background-color: #e0e0e0;
+        }
+
+        .progress {
+            height: 8px;
+            background-color: #ccc;
+            border-radius: 4px;
+            margin-top: 16px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #663399;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #663399;
+            color: #ffffff;
+        }
+
+        .btn-danger {
+            background-color:#663399;
+            color: #ffffff;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .logout {
+            position: relative;
+            height: 20px;
+            width: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <h1>Goal Dashboard</h1>
+        <button onclick="logout();">Logout</button>
+    </header>
+    <script>
+        function logout(){
+            window.location.href = '/landing';
+        }
+    </script>
+    
+    <div class="welcome-container">
+        Start tracking / adding your goals of your choice!
+    </div>
+    
+    <div class="container">
+        <div class="goal">
+            <ul class="tasks-list">
+                <!-- Tasks will be added dynamically here -->
+            </ul>
+
+            <div class="btn-container">
+
+                <button class="btn btn-primary add-goal">Add Goal</button>
+
+            </div>
+        </div>
+        
+        <!-- Additional goal elements go here -->
+
+        <!-- Save Changes Button -->
+        <div class="btn-container">
+            <button class="btn btn-primary save-changes">Save Changes</button>
+            <button class="btn btn-danger clear-tasks">Clear Tasks</button>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='functions.js')}}"></script>
+</body>
+</html>

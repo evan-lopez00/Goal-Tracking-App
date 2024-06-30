@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e0d2f1; /* Light purple background */
+            color: #6a0dad; /* Purple text color */
+            background-image: url('../static/cartoon-illustration-of-people-characters-in-the-large-crowd-K6RRC0.png');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        #auth-container {
+            width: 400px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #6a0dad; /* Purple heading color */
+            font-size: 2.5rem; /* Larger font size for headings */
+            margin-bottom: 30px;
+            border-bottom: 2px solid #6a0dad; /* Purple border for headings */
+            padding-bottom: 10px; /* Padding at the bottom of the heading */
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            background-color: #f5e1f8; /* Lighter purple background for inputs */
+            color: #6a0dad; /* Purple text color */
+            font-size: 1.1rem; /* Increased font size for inputs */
+            outline: none; /* Remove input outline on focus */
+        }
+
+        input[type="submit"] {
+            background-color: #6a0dad; /* Purple submit button */
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #4b007d; /* Darker purple on hover */
+        }
+
+        .switch {
+            margin-top: 20px;
+            font-size: 1.2rem; /* Increased font size for switch text */
+            color: #6a0dad; /* Purple text color for switch links */
+        }
+
+        .switch a {
+            color: #6a0dad; /* Purple link color */
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid #6a0dad; /* Purple border for links */
+            padding-bottom: 5px; /* Padding at the bottom of the link */
+        }
+
+        .switch a:hover {
+            color: #4b007d; /* Darker purple on hover */
+        }
+    </style>
+</head>
+<body>
+    <div id="auth-container">
+        <h2>Welcome to GOAL-E</h2>
+
+        <form id="loginForm" action="/login" method="post">
+            <input type="email"  name="email" placeholder="Email" required><br>
+            <input type="password"  name="password" placeholder="Password" required><br>
+            <input type="submit" value="Login">
+        </form>
+
+        <div class="switch">
+            Don't have an account? <a href="#" onclick="toggleForm()">Sign Up</a>
+        </div>
+
+        <form id="signupForm" action="/signup" method="post" style="display: none;">
+            <h2>Sign Up</h2>
+            <input type="email" id="email" name="email" placeholder="Email" required><br>
+            <input type="password" id="password" name="password" placeholder="Password" required><br>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required><br>
+            <input type="text" id="firstName" name="firstName" placeholder="First Name" required><br> 
+            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required><br>
+            <input type="submit" value="Sign Up">
+        </form>
+
+        <div class="switch">
+            Already have an account? <a href="#" onclick="toggleForm()">Login</a>
+        </div>
+    </div>
+
+    <script>
+        const backendBaseUrl = 'http://localhost:5000';
+        
+        function toggleForm() {
+            var loginForm = document.getElementById("loginForm");
+            var signupForm = document.getElementById("signupForm");
+
+            if (loginForm.style.display === "none") {
+                loginForm.style.display = "block";
+                signupForm.style.display = "none";
+            } else {
+                loginForm.style.display = "none";
+                signupForm.style.display = "block";
+            }
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    var formData = new FormData(this);
+
+    // Send form data to backend using fetch API
+    fetch(`${backendBaseUrl}/login`, { 
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.redirected) {
+            window.location.href = '/dashboard'; // Redirect to the dashboard on successful login
+        } else {
+            window.location.href = '/landing'; // Redirect back to login on login failure
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+document.getElementById("signupForm").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+
+// Assuming you have access to form field values
+const firstName = document.getElementById('firstName').value;
+const lastName = document.getElementById('lastName').value;
+const email = document.getElementById('email').value;
+const password = document.getElementById('password').value;
+
+// Construct form data
+const formData = new FormData();
+formData.append('firstName', firstName);
+formData.append('lastName', lastName);
+formData.append('email', email);
+formData.append('password', password);
+
+// Make a POST request with form data
+fetch('/createUser', {
+    method: 'POST',
+    body: formData
+})
+.then(response => {
+    if (response.redirected) {
+        window.location.href = '/dashboard'; // Redirect to dashboard on success
+    } else {
+        // Handle failure (if needed)
+        console.log("Failed to create user");
+    }
+})
+.catch(error => {
+    console.error('Error creating user:', error);
+});
+
+});
+    </script>
+</body>
+</html>
